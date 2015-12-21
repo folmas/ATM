@@ -128,7 +128,7 @@ public class ATMTest {
         instance.validateCard(card,3210);
         double expResult = accountBalanceAfter;
         double result = instance.getCash(amountForWithdraw);
-        assertEquals(expResult, result);
+        assertEquals(expResult, result, 0);
     }
     
     @Test
