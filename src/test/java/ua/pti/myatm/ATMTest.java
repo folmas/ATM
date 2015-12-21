@@ -121,12 +121,10 @@ public class ATMTest {
         Account account = mock(Account.class);
         when(account.getBalance()).thenReturn(accountBalanceBefore).thenReturn(accountBalanceAfter);
         when(account.withdraw(amountForWithdraw)).thenReturn(amountForWithdraw);
-        
         Card card = mock(Card.class);
         when(card.getAccount()).thenReturn(account);
         when(card.checkPin(anyInt())).thenReturn(true);
         when(card.isBlocked()).thenReturn(false);
-        
         ATM instance = new ATM(1000.0);
         instance.validateCard(card,3210);
         double expResult = accountBalanceAfter;
