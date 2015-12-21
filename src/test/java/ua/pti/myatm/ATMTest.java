@@ -32,7 +32,7 @@ public class ATMTest {
 
     
     @Test(expected = ATM.ATMisEmptyException.class)
-    public void testValidateCardWithoutInsertedCard() {
+    public void testValidateCardEmptyATM() {
         System.out.println("Without inserted card");
         ATM instance = new ATM(30.0);
         boolean expResult = false;
@@ -42,7 +42,7 @@ public class ATMTest {
   
 
     @Test
-    public void testValidateBlockedCard() {
+    public void testValidateBlockedCardValidPin() {
         System.out.println("with blocked card");
         Card card = mock(Card.class);
         int pinCode = 3210;
@@ -55,7 +55,7 @@ public class ATMTest {
     }
     
       @Test
-    public void testValidateCard() {
+    public void testValidateCardUnblockedCardValidPin() {
         System.out.println("validateCard no block, true pin");
         Card card = mock(Card.class);
         int pinCode = 3210;
@@ -68,7 +68,7 @@ public class ATMTest {
     }
 
     @Test
-    public void testValidateCardWithWrongPin() {
+    public void testValidateCardUnblockedCardInvalidPin() {
         System.out.println("validateCard with wrong pin");
         Card card = mock(Card.class);
         when(card.checkPin(anyInt())).thenReturn(false);
@@ -76,16 +76,18 @@ public class ATMTest {
         ATM instance = new ATM(30.0);
         boolean expResult = false;
         boolean result = instance.validateCard(card, 3210);
-        assertEquals(expResult, result)
-;    }
+        assertEquals(expResult, result);
+    }
 
 
   
 
     @Test
     public void testCheckBalance() {
-        System.out.println("checkbalance");
+        System.out.println("check balance");
         Account account = mock(Account.class);
+        InOrder inOrder = inOrder(card);
+
         double accountBalance = 1000.0;
         when(account.getBalance()).thenReturn(accountBalance);
         Card card = mock(Card.class);
@@ -97,6 +99,7 @@ public class ATMTest {
         ATM instance = new ATM(startBalanceInATM);
         instance.validateCard(card,3210);
         double result = instance.checkBalance();
+        inOrder.verify(card).getAccount();
         assertEquals(accountBalance, result, 0.0);
     }
 
