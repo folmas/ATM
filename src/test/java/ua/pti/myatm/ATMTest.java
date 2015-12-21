@@ -190,7 +190,6 @@ public class ATMTest {
         when(card.getAccount()).thenReturn(account);
         when(card.checkPin(anyInt())).thenReturn(true);
         when(card.isBlocked()).thenReturn(false);
-        InOrder card = inOrder(card);
         ATM instance = new ATM(ATMBalance);
         instance.validateCard(card, 1234);
         double result = instance.getCash(accountWithdraw);
