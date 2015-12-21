@@ -28,7 +28,7 @@ public class ATM {
     
    
     public double checkBalance(){
-    	isATMEmpty();
+    	isATMEmpty(insertedCard);
     	return this.insertedCard.getAccount().getBalance();
     	
     }
