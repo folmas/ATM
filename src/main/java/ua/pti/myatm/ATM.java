@@ -17,7 +17,7 @@ public class ATM {
     }
 
     public boolean validateCard(Card card, int pinCode){
-    //	isATMEmpty();
+    	isATMEmpty();
     	if ( (card.checkPin(pinCode) && !card.isBlocked())){
     		this.insertedCard = card;
 		return true;
@@ -35,6 +35,7 @@ public class ATM {
     
 
     public double getCash(double amount){
+    	isATMEmpty();
     	isEnoughBalance(amount);
     	isEnoughMoneyATM(amount);
     	this.insertedCard.getAccount().withdraw(amount);
