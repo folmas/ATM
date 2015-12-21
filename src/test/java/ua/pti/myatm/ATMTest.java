@@ -86,11 +86,12 @@ public class ATMTest {
     public void testCheckBalance() {
         System.out.println("check balance");
         Account account = mock(Account.class);
-        InOrder inOrder = inOrder(card);
+        
 
         double accountBalance = 1000.0;
         when(account.getBalance()).thenReturn(accountBalance);
         Card card = mock(Card.class);
+        InOrder inOrder = inOrder(card);
         when(card.getAccount()).thenReturn(account);
         when(card.checkPin(anyInt())).thenReturn(true);
         when(card.isBlocked()).thenReturn(false);
