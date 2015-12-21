@@ -3,11 +3,11 @@ package ua.pti.myatm;
 public class ATM {
 	
 	private double moneyInATM;
-	private Card currentCard = null;
+	private Card insertedCard;
 
     ATM(double moneyInATM){
-    	if (moneyInATM  < 0.0)
-    		throw new IllegalArgumentException("Start amount should not be less than zero");
+	insertedCard=NULL;
+    	isPossibleMoney(moneyInATM);
     	this.moneyInATM = moneyInATM;
     }
 
@@ -17,40 +17,54 @@ public class ATM {
     }
 
     public boolean validateCard(Card card, int pinCode){
-    	if (card == null)
-    		throw new NoCardInsertedException();
-    	boolean validness = (card.checkPin(pinCode) && !card.isBlocked());
-    	if (validness){
-    		this.currentCard = card;
+    	isATMEmpty();
+    	if ( (card.checkPin(pinCode) && !card.isBlocked())){
+    		this.insertedCard = card;
+		return true;
     	}
-    	return validness;
+    	return false;
+
     }
     
    
     public double checkBalance(){
-    	if (this.currentCard == null)
-    		throw new NoCardInsertedException();
-    	return this.currentCard.getAccount().getBalance();
+    	isATMEmpty();
+    	return this.insertedCard.getAccount().getBalance();
     	
     }
     
 
     public double getCash(double amount){
-    	if (this.currentCard == null) 	
-    		throw new NoCardInsertedException();
-    	if(this.currentCard.getAccount().getBalance() < amount)
-    		throw new NotEnoughMoneyInAccountException();
-    	if (this.moneyInATM < amount)
-    		throw new NotEnoughMoneyInATMException();
-    	this.currentCard.getAccount().withdraw(amount);
+    	isEnoughBalance();
+    	isEnoughMoneyATM();
+    	this.insertedCard.getAccount().withdraw(amount);
     	this.moneyInATM -= amount;
-    	return this.currentCard.getAccount().getBalance();
+    	return this.insertedCard.getAccount().getBalance();
     }
     	
-	public class NoCardInsertedException extends RuntimeException {
+    	public void isATMEmpty(){
+    		if (insertedCard == NULL)
+    			throw new ATMisEmptyException();
+    	}
+    	
+    	public void isEnoughBalance(){
+    		if(checkBalance() < amount)
+    			throw new NotEnoughBalanceException();
+    	}
+    	public void isEnoughMoneyATM(){
+    		if (this.moneyInATM < amount)
+    			throw new NotEnoughMoneyInATMException();
+    	}
+    	public void isPossibleMoney(double money){
+    		if (money  < 0.0)
+    			throw new IllegalArgumentException("Impossible argument");
+    	}
+    		
+    	}
+	public class ATMisEmptyException extends RuntimeException {
 		
 	}
-	public class NotEnoughMoneyInAccountException extends RuntimeException {
+	public class NotEnoughBalanceException extends RuntimeException {
 
 	}
 	public class NotEnoughMoneyInATMException extends RuntimeException {
