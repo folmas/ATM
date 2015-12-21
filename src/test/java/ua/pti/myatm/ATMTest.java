@@ -136,30 +136,30 @@ public class ATMTest {
         System.out.println("order check for getCash method");
         double ATMBalance = 200;
         double accountBalance = 100;
-        double accountWithdraw = 90;
+        double withdraw = 90;
         double accountBalanceAfter = 10;
         Account account = mock(Account.class);
         when(account.getBalance()).thenReturn(accountBalance).thenReturn(accountBalanceAfter);
-        when(account.withdraw(accountWithdraw)).thenReturn(accountWithdraw);
+        when(account.withdraw(accountWithdraw)).thenReturn(withdraw);
         Card card = mock(Card.class);
         when(card.getAccount()).thenReturn(account);
         when(card.checkPin(anyInt())).thenReturn(true);
         when(card.isBlocked()).thenReturn(false);
         ATM instance = new ATM(ATMBalance);
         instance.validateCard(card, 1234);
-        double result = instance.getCash(accountWithdraw);
+        double result = instance.getCash(withdraw);
         InOrder order = inOrder(account);
         order.verify(account).getBalance();
-        order.verify(account).withdraw(accountWithdraw);
+        order.verify(account).withdraw(withdraw);
     }
 
     @Test(expected = ATM.ATMisEmptyException.class)
     public void textGetCashWitoutCard() {
-       double accountWithdraw = 1;
+       double withdraw = 1;
         double ATMBalance = 200;
         ATM instance = new ATM(ATMBalance);
         System.out.println("getCash with Empty ATM");
-        double result = instance.getCash(accountWithdraw);
+        double result = instance.getCash(withdraw);
     }
     
 
