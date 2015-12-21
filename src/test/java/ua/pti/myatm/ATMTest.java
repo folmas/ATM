@@ -130,7 +130,7 @@ public class ATMTest {
         assertEquals(expResult, result, 0.0);
     }
 
-    @Test(expected = ATM.ATMisEmpty.class)
+    @Test(expected = ATM.ATMisEmptyException.class)
     public void textGetCashWitoutCard() {
         System.out.println("getCash without inserted(valid) card");
         double ATMBalance = 200.0;
