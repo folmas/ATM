@@ -15,18 +15,18 @@ public class ATMTest {
      @Test(expected = IllegalArgumentException.class)
     public void testATMWithLowerThanZeroStartBalance() {
         System.out.println("ATM with balance < 0");
-        ATM instance = new ATM(-22.0);
+        ATM instance = new ATM(-22);
     }
     
  
     
     @Test
     public void testGetMoneyInATM() {
-        ATM instance = new ATM(30.0);
-        double expResult = 30.0;
+        ATM instance = new ATM(30);
+        double expResult = 30;
         System.out.println("get Money");
         double result = instance.getMoneyInATM();
-        assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0);
         
     }
 
