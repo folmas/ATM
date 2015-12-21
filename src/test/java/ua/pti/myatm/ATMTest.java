@@ -113,14 +113,15 @@ public class ATMTest {
     @Test
     public void testGetCash() {
         System.out.println("get Cash allright");
-        double expResult = accountBalanceAfter;
-        double accountBalanceBefore = 1000;
+        
+        double before = 1000;
         double amountForWithdraw = 100;
-        double accountBalanceAfter = 900;
+        double after = 900;
         Account account = mock(Account.class);
-        when(account.getBalance()).thenReturn(accountBalanceBefore).thenReturn(accountBalanceAfter);
+        when(account.getBalance()).thenReturn(before).thenReturn(after);
         when(account.withdraw(amountForWithdraw)).thenReturn(amountForWithdraw);
         Card card = mock(Card.class);
+        double expResult = after;
         when(card.getAccount()).thenReturn(account);
         when(card.checkPin(anyInt())).thenReturn(true);
         when(card.isBlocked()).thenReturn(false);
