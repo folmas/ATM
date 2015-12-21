@@ -31,7 +31,7 @@ public class ATMTest {
     }
 
     
-    @Test(expected = ATM.ATMisEmptyException.class)
+    @Test(expected = ATMisEmptyException.class)
     public void testValidateCardWithoutInsertedCard() {
         System.out.println("Without inserted card");
         ATM instance = new ATM(30.0);
