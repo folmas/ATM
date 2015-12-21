@@ -115,11 +115,11 @@ public class ATMTest {
         System.out.println("get Cash allright");
         
         double before = 1000;
-        double amountForWithdraw = 100;
+        double withdraw = 100;
         double after = 900;
         Account account = mock(Account.class);
         when(account.getBalance()).thenReturn(before).thenReturn(after);
-        when(account.withdraw(amountForWithdraw)).thenReturn(amountForWithdraw);
+        when(account.withdraw(withdraw)).thenReturn(withdraw);
         Card card = mock(Card.class);
         double expResult = after;
         when(card.getAccount()).thenReturn(account);
@@ -127,7 +127,7 @@ public class ATMTest {
         when(card.isBlocked()).thenReturn(false);
         ATM instance = new ATM(1000);
         instance.validateCard(card,3210);
-        double result = instance.getCash(amountForWithdraw);
+        double result = instance.getCash(withdraw);
         assertEquals(expResult, result, 0);
     }
     
