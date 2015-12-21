@@ -6,7 +6,7 @@ public class ATM {
 	private Card insertedCard;
 
     ATM(double moneyInATM){
-	insertedCard=NULL;
+	insertedCard=null;
     	isPossibleMoney(moneyInATM);
     	this.moneyInATM = moneyInATM;
     }
@@ -35,23 +35,23 @@ public class ATM {
     
 
     public double getCash(double amount){
-    	isEnoughBalance();
-    	isEnoughMoneyATM();
+    	isEnoughBalance(amount);
+    	isEnoughMoneyATM(amount);
     	this.insertedCard.getAccount().withdraw(amount);
     	this.moneyInATM -= amount;
     	return this.insertedCard.getAccount().getBalance();
     }
     	
     	public void isATMEmpty(){
-    		if (insertedCard == NULL)
+    		if (insertedCard == null)
     			throw new ATMisEmptyException();
     	}
     	
-    	public void isEnoughBalance(){
+    	public void isEnoughBalance(double amount){
     		if(checkBalance() < amount)
     			throw new NotEnoughBalanceException();
     	}
-    	public void isEnoughMoneyATM(){
+    	public void isEnoughMoneyATM(double amount){
     		if (this.moneyInATM < amount)
     			throw new NotEnoughMoneyInATMException();
     	}
