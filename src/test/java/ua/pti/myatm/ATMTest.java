@@ -84,7 +84,7 @@ public class ATMTest {
   
 
     @Test
-    public void testCheckBalance() {
+    public void testCheckBalanceValidPinUnblockCard() {
         System.out.println("check balance");
         Account account = mock(Account.class);
         double accountBalance = 1000.0;
@@ -104,9 +104,9 @@ public class ATMTest {
     }
 
     @Test(expected=ATM.ATMisEmptyException.class)
-    public void testCheckBalanceWithoutCard(){
+    public void testCheckBalanceNoCard(){
     	System.out.println("balance with Empty ATM");
-    	double ATMBalance =100.0;
+    	double ATMBalance =300;
     	ATM instance = new ATM(ATMBalance);
     	double result = instance.checkBalance();
     }
