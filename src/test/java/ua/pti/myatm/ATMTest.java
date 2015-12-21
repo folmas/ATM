@@ -31,7 +31,7 @@ public class ATMTest {
     }
 
     
-    @Test(expected = ATMisEmptyException.class)
+    @Test(expected = ATM.ATMisEmptyException.class)
     public void testValidateCardWithoutInsertedCard() {
         System.out.println("Without inserted card");
         ATM instance = new ATM(30.0);
@@ -100,7 +100,7 @@ public class ATMTest {
         assertEquals(accountBalance, result, 0.0);
     }
 
-    @Test(expected=ATMATMisEmtyException.class)
+    @Test(expected=ATM.ATMisEmptyException.class)
     public void testCheckBalanceWithoutCard(){
     	System.out.println("check balance with no card inserted");
     	double ATMBalance =100.0;
@@ -139,7 +139,7 @@ public class ATMTest {
         double result = instance.getCash(accountWithdraw);
     }
 
-    @Test(expected = ATM.NotEnougBalanceException.class)
+    @Test(expected = ATM.NotEnoughBalanceException.class)
     public void testGetCashWithNotEnoughMoneyInAccount(){
     	System.out.println("getCash with not enough money in account");
     	double ATMBalance = 100.0;
