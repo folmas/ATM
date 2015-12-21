@@ -1,59 +1,62 @@
 package ua.pti.myatm;
-
-public class ATM {
-	
-	private double moneyInATM;
-	private Card currentCard = null;
-
+    
+public class ATM {    
+    public double moneyInATM;
+    public Card insertedCard;
+    
     ATM(double moneyInATM){
-    	if (moneyInATM  < 0.0)
-    		throw new IllegalArgumentException("Start amount should not be less than zero");
-    	this.moneyInATM = moneyInATM;
+        this.moneyInATM=moneyInATM;
+        insertedCard=null;
     }
-
 
     public double getMoneyInATM() {
-    	return this.moneyInATM;
+        return this.moneyInATM;
     }
-
+ 
     public boolean validateCard(Card card, int pinCode){
-    	if (card == null)
-    		throw new NoCardInsertedException();
-    	boolean validness = (card.checkPin(pinCode) && !card.isBlocked());
-    	if (validness){
-    		this.currentCard = card;
-    	}
-    	return validness;
+        if (!card.checkPin(pinCode)){
+             System.out.println("Invalid PIN");
+             return false;
+        } else if (card.isBlocked()){
+             System.out.println("Card is blocked!");
+             return false;
+        } else {
+             insertedCard=card;
+             return true;
+        }      
     }
     
+    public void cardIsNull() throws NoCardInserted{
+        if(insertedCard==null){
+            throw new NoCardInserted("No card inserted!");
+        }
+    }
+    
+    public double checkBalance() throws NoCardInserted{
+        cardIsNull();
+        return insertedCard.getAccount().getBalance();
+    }
    
-    public double checkBalance(){
-    	if (this.currentCard == null)
-    		throw new NoCardInsertedException();
-    	return this.currentCard.getAccount().getBalance();
-    	
+    public double getCash(double amount) throws NoCardInserted, NotEnoughMoneyInAccount, NotEnoughMoneyInATM{
+        cardIsNull();
+        if (getMoneyInATM() < amount){
+            throw new NotEnoughMoneyInATM("No money no honey! Not enough money in the ATM");
+        } else if (insertedCard.getAccount().getBalance() < amount){
+            throw new NotEnoughMoneyInAccount("A fool and his money are soon parted.. Not enough money on your account!");
+        } else{
+            System.out.println("Sucess!");
+            this.moneyInATM-=amount;
+            return insertedCard.getAccount().withdrow(amount);
+        }  
     }
     
-
-    public double getCash(double amount){
-    	if (this.currentCard == null) 	
-    		throw new NoCardInsertedException();
-    	if(this.currentCard.getAccount().getBalance() < amount)
-    		throw new NotEnoughMoneyInAccountException();
-    	if (this.moneyInATM < amount)
-    		throw new NotEnoughMoneyInATMException();
-    	this.currentCard.getAccount().withdraw(amount);
-    	this.moneyInATM -= amount;
-    	return this.currentCard.getAccount().getBalance();
+    public double addCash(double amount) throws NoCardInserted,NotEnoughMoneyInATM{
+        if (insertedCard.isBlocked()){
+            throw new NoCardInserted("Card is blocked!");
+        } else if (getMoneyInATM() < amount){
+            throw new NotEnoughMoneyInATM("No money no honey! Not enough money in the ATM");
+        } else {
+        this.moneyInATM+=amount;
+        return insertedCard.getAccount().charge(amount);}
     }
-    	
-	public class NoCardInsertedException extends RuntimeException {
-		
-	}
-	public class NotEnoughMoneyInAccountException extends RuntimeException {
-
-	}
-	public class NotEnoughMoneyInATMException extends RuntimeException {
-
-	}
 }
