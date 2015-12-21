@@ -60,7 +60,7 @@ public class ATM {
     			throw new IllegalArgumentException("Impossible argument");
     	}
     		
-    	}
+    	
 	public class ATMisEmptyException extends RuntimeException {
 		
 	}
