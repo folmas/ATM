@@ -48,7 +48,7 @@ public class ATM {
     	}
     	
     	public void isEnoughBalance(double amount){
-    		if(checkBalance() < amount)
+    		if(this.insertedCard.getAccount().getBalance() < amount)
     			throw new NotEnoughBalanceException();
     	}
     	public void isEnoughMoneyATM(double amount){
