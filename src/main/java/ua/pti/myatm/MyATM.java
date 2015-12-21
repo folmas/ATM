@@ -6,8 +6,8 @@ public class MyATM {
         double moneyInATM = 1000;
         ATM atm = new ATM(moneyInATM);
         Card card = null;
-        atm.validateCard(card, 1234);
+        atm.validateCard(card, 3210);
         atm.checkBalance();
-        atm.getCash(999.99);        
+        atm.getCash(444);        
     }
 }
